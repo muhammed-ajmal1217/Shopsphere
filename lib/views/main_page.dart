@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:myapp/views/auth_page.dart';
 import 'package:myapp/views/home.dart';
+import 'package:myapp/widgets/bottombar.dart';
 
 class MainPage extends StatelessWidget {
   const MainPage({super.key});
@@ -13,7 +14,7 @@ class MainPage extends StatelessWidget {
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
           if(snapshot.hasData){
-            return HomePage();
+            return BottomNavigation();
           }else{
             return AuthPage();
           }

@@ -27,11 +27,6 @@ class AuthService {
       throw Exception(e.code);
     }
   }
-
-  Future signout() async {
-    await auth.signOut();
-  }
-
   Future<void> signInWithGoogle() async {
     try {
       final GoogleSignInAccount? gUser = await GoogleSignIn().signIn();
@@ -51,6 +46,17 @@ class AuthService {
       }
     } catch (error, stackTrace) {
       print("Error during Google Sign-In: $error\n$stackTrace");
+    }
+  }
+
+  Future<void> signOutFromGoogle() async {
+    final GoogleSignIn googleSignIn = GoogleSignIn();
+    final FirebaseAuth auth = FirebaseAuth.instance;
+    try {
+      await googleSignIn.signOut();
+      await auth.signOut();
+    } catch (e) {
+      print("Error during Google sign-out: $e");
     }
   }
 }

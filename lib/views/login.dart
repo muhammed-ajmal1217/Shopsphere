@@ -40,7 +40,7 @@ class _LoginPageState extends State<LoginPage> {
             child: Container(
               height: height*1.5,
               width: double.infinity,
-              color: const Color.fromARGB(255, 0, 54, 57)
+              color: Color.fromARGB(255, 1, 72, 76)
             ),
           ),
           Padding(
@@ -53,7 +53,7 @@ class _LoginPageState extends State<LoginPage> {
                   spacingHeight(10),
                   Text('Welcome',style: GoogleFonts.ubuntu(color: Colors.white,fontSize: 30,fontWeight: FontWeight.w500),),
                   Text('Please enter your e-mail and password to Login',style: GoogleFonts.montserrat(color: const Color.fromARGB(255, 190, 189, 189),fontSize: 12),),
-                  spacingHeight(30),
+                  spacingHeight(20),
                   textFormField(controller: emailController,text: 'Email'),
                   spacingHeight(30),
                   textFormField(controller: passwordController,text: 'Password'),
@@ -84,7 +84,7 @@ class _LoginPageState extends State<LoginPage> {
                         child: Text('Sign Up',style: GoogleFonts.workSans(color: Colors.blue,fontSize: 13,fontWeight: FontWeight.w500),)),
                     ],
                   ),
-                  Text('Or Login with',style: GoogleFonts.workSans(color: Colors.grey,fontSize: 10,fontWeight: FontWeight.w500),),
+                  Text('Or Sign in with',style: GoogleFonts.workSans(color: Colors.grey,fontSize: 10,fontWeight: FontWeight.w500),),
                   spacingHeight(10),
                   spacingHeight(10),
                   Row(
@@ -94,7 +94,7 @@ class _LoginPageState extends State<LoginPage> {
                         height: height*0.07,
                         width:width*0.43 ,
                         decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.2),
+                          color: Colors.white.withOpacity(0.4),
                           borderRadius: const BorderRadius.only(topLeft: Radius.circular(20),bottomLeft: Radius.circular(20))
                         ),
                         child: Row(
@@ -113,7 +113,7 @@ class _LoginPageState extends State<LoginPage> {
                         height: height*0.07,
                         width:width*0.43 ,
                         decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.2),
+                          color: Colors.white.withOpacity(0.4),
                           borderRadius: BorderRadius.only(topRight: Radius.circular(20),bottomRight: Radius.circular(20))
                         ),
                         child: Row(

@@ -10,6 +10,7 @@ SizedBox spacingWidth(double width) => SizedBox(
 TextFormField textFormField({TextEditingController? controller, String? text}) {
   return TextFormField(
     controller: controller!,
+    style: TextStyle(color: Colors.white),
     decoration: InputDecoration(
       hintText: text!,
       hintStyle: TextStyle(color: Color.fromARGB(255, 134, 133, 133)),
