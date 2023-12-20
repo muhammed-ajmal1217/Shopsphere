@@ -31,16 +31,15 @@ class _LoginPageState extends State<LoginPage> {
     var width=MediaQuery.of(context).size.width;
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: const Color.fromARGB(255, 6, 16, 34),
+      backgroundColor: Color.fromARGB(255, 24, 30, 41),
       body: Stack(
-        
         children: [
           ClipPath(
             clipper: WaveClipper(),
             child: Container(
               height: height*1.5,
               width: double.infinity,
-              color: Color.fromARGB(255, 1, 72, 76)
+              color: Color.fromARGB(255, 33, 41, 56)
             ),
           ),
           Padding(

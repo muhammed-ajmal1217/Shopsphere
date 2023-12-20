@@ -16,13 +16,13 @@ class Wishlist extends ChangeNotifier {
   void addToWishlist(ProductModel product) {
     if (!wishlistItems.contains(product)) {
       wishlistItems.add(product);
-      notifyListeners(); // Notify listeners when the wishlist is modified
+      notifyListeners(); 
     }
   }
 
   void removeFromWishlist(ProductModel product) {
     wishlistItems.remove(product);
-    notifyListeners(); // Notify listeners when the wishlist is modified
+    notifyListeners(); 
   }
 
   bool isWishlistItem(ProductModel product) {

@@ -1,32 +1,36 @@
 class ProductModel {
-  String? id;
+  int? id;
   String? title;
-  String? price;
+  double? price;
   String? description;
   String? category;
   String? image;
   Rating? rating;
 
-  ProductModel({
-    this.id,
-    this.title,
-    this.price,
-    this.description,
-    this.category,
-    this.image,
-    this.rating,
-  });
+  ProductModel(
+      {this.id,
+      this.title,
+      this.price,
+      this.description,
+      this.category,
+      this.image,
+      this.rating});
 
-  ProductModel.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    title = json['title'];
-    price = json['price'];
-    description = json['description'];
-    category = json['category'];
-    image = json['image'];
-    rating =
-        json['rating'] != null ? new Rating.fromJson(json['rating']) : null;
+ProductModel.fromJson(Map<String, dynamic> json) {
+  id = json['id'] != null ? int.tryParse(json['id']) : null;
+  title = json['title'];
+  price = json['price'] != null ? double.tryParse(json['price']) : null;
+  description = json['description'];
+  category = json['category'];
+  image = json['image'];
+  if (json['rating'] is Map<String, dynamic>) {
+    rating = Rating.fromJson(json['rating']);
+  } else {
+    rating = null;
   }
+}
+
+
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
@@ -42,16 +46,15 @@ class ProductModel {
     return data;
   }
 }
-
 class Rating {
-  String? rate;
-  String? count;
+  double? rate;
+  int? count;
 
   Rating({this.rate, this.count});
 
   Rating.fromJson(Map<String, dynamic> json) {
-    rate = json['rate'];
-    count = json['count'];
+    rate = double.tryParse(json['rate'] ?? '');
+    count = int.tryParse(json['count'] ?? '');
   }
 
   Map<String, dynamic> toJson() {

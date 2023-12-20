@@ -45,9 +45,9 @@ class _SignUpPageState extends State<SignUpPage> {
     var height = MediaQuery.of(context).size.height;
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: Color.fromARGB(255, 6, 16, 34),
+          backgroundColor: Color.fromARGB(255, 24, 30, 41),
         ),
-        backgroundColor: Color.fromARGB(255, 6, 16, 34),
+        backgroundColor: Color.fromARGB(255, 24, 30, 41),
         body: Stack(
           children: [
             ClipPath(
@@ -55,7 +55,7 @@ class _SignUpPageState extends State<SignUpPage> {
               child: Container(
                 height: height*1.5,
               width: double.infinity,
-              color: Color.fromARGB(255, 0, 54, 57)
+              color: Color.fromARGB(255, 33, 41, 56)
               ),
             ),
             Padding(

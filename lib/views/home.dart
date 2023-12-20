@@ -1,104 +1,156 @@
-import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:myapp/helpers/helpers.dart';
 import 'package:myapp/model/product_model.dart';
-import 'package:myapp/services/apiservices.dart';
 import 'package:myapp/services/auth_service.dart';
-import 'package:myapp/services/firebase_service.dart';
-import 'package:myapp/views/wishlist.dart';
-import 'package:myapp/widgets/wishlist_class.dart';
-
-void toggleWishlistItem(ProductModel product) {
-  Wishlist wishlist = Wishlist();
-  if (wishlist.isWishlistItem(product)) {
-    wishlist.removeFromWishlist(product);
-  } else {
-    wishlist.addToWishlist(product);
-  }
+import 'package:myapp/views/drawer.dart';
+import 'package:myapp/widgets/shoe_grid.dart';
+class HomePage extends StatefulWidget {
+  @override
+  State<HomePage> createState() => _HomePageState();
 }
 
+class _HomePageState extends State<HomePage> {
+  AuthService auth = AuthService();
 
-class HomePage extends StatelessWidget {
-  AuthService auth=AuthService();
+  final List<String> images = [
+    'assets/4021475.jpg',
+    'assets/5565175.jpg',
+    'assets/add.1.jpg',
+    'assets/add.2.jpg',
+    'assets/add.3.jpg',
+    'assets/add.4.jpg',
+    'assets/add.5.jpg',
+  ];
+
   @override
   Widget build(BuildContext context) {
-    final height = MediaQuery.of(context).size.height;
-    final width = MediaQuery.of(context).size.width;
-
     return Scaffold(
+      backgroundColor: Color.fromARGB(255, 24, 30, 41),
       appBar: AppBar(
-        backgroundColor: Colors.black,
-        actions: [
-          GestureDetector(
-                  onTap: () {
-                    AuthService().signOutFromGoogle();
-                  },
-                  child: Icon(Icons.logout),
-                ),
-        ],
+        backgroundColor: Color.fromARGB(255, 24, 30, 41),
       ),
-      backgroundColor: Colors.black,
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            spacingHeight(20),
-            Padding(
-              padding: const EdgeInsets.only(left: 20),
-              child: Text(
-                'Hello..${auth.auth.currentUser!.email}', // Adjust the greeting as needed
-                style:
-                    GoogleFonts.montserrat(color: Colors.white, fontSize: 20),
-              ),
-            ),
-            spacingHeight(20),
-            Container(
-              height: height * 0.3,
-              width: width,
-              child: CarouselSlider(
-                items: [
-                  Container(
-                    width: width * 0.9,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
-                      color: Color.fromARGB(255, 54, 54, 54),
-                    ),
-                    child: Center(
-                      child: Text('Slide 1'),
-                    ),
+      endDrawer: drawerPage(),
+      body: CustomScrollView(
+        slivers: [
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.only(left: 10.0, bottom: 15),
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      Text('Hello..',
+                          style: GoogleFonts.montserrat(
+                              fontSize: 17,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.white)),
+                      Image.asset(
+                        'assets/handwave.png',
+                        height: 20,
+                      ),
+                      spacingWidth(10),
+                      Text('${auth.auth.currentUser!.displayName}',
+                          style: GoogleFonts.montserrat(
+                              fontSize: 17,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.white)),
+                    ],
                   ),
-                  Container(
-                    width: width * 0.9,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: Color.fromARGB(255, 54, 54, 54),
-                    ),
-                    child: Center(
-                      child: Text('Slide 2'),
-                    ),
+                  Row(
+                    children: [
+                      Text('Start',
+                          style: GoogleFonts.montserrat(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.white)),
+                      Icon(
+                        Icons.arrow_right,
+                        color: Colors.green,
+                      ),
+                      spacingWidth(10),
+                      Text('Shopping',
+                          style: GoogleFonts.montserrat(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.amber)),
+                    ],
                   ),
                 ],
-                options: CarouselOptions(
-                  height: height * 0.5,
-                  viewportFraction: 1.0,
-                  autoPlay: true,
-                  autoPlayInterval: Duration(seconds: 2),
-                  autoPlayAnimationDuration: Duration(milliseconds: 800),
-                  autoPlayCurve: Curves.fastOutSlowIn,
-                  pauseAutoPlayOnTouch: true,
-                  aspectRatio: 2.0,
-                  enlargeCenterPage: true,
-                ),
               ),
             ),
-            spacingHeight(30),
-            
-          ],
-        ),
+          ),
+          SliverToBoxAdapter(
+            child: CarouselSlider(
+              options: CarouselOptions(
+                height: 200.0,
+                autoPlay: true,
+                aspectRatio: 16 / 9,
+                autoPlayCurve: Curves.fastOutSlowIn,
+                enableInfiniteScroll: true,
+                autoPlayAnimationDuration: Duration(milliseconds: 800),
+                viewportFraction: 0.8,
+              ),
+              items: images.map((String imageUrl) {
+                return Builder(
+                  builder: (BuildContext context) {
+                    return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Padding(
+                        padding: const EdgeInsets.all(2.0),
+                        child: Container(
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              color: Colors.grey[800],
+                              image: DecorationImage(
+                                  fit: BoxFit.fill,
+                                  image: AssetImage(imageUrl))),
+                        ),
+                      ),
+                    );
+                  },
+                );
+              }).toList(),
+            ),
+          ),
+          SliverPadding(
+            padding: EdgeInsets.symmetric(vertical: 10.0),
+          ),
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.only(left: 10.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Text('Choose your',
+                          style: GoogleFonts.montserrat(
+                              fontSize: 15,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.white)),
+                      spacingWidth(10),
+                      Text('Products',
+                          style: GoogleFonts.montserrat(
+                              fontSize: 17,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.amber)),
+                    ],
+                  ),
+                  Text('Sports',
+                      style: GoogleFonts.montserrat(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.white)),
+                ],
+              ),
+            ),
+          ),
+          ShoeItems(),
+        ],
       ),
     );
   }
 }
-
-
