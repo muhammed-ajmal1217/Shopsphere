@@ -2,7 +2,6 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:myapp/helpers/helpers.dart';
-import 'package:myapp/model/product_model.dart';
 import 'package:myapp/services/auth_service.dart';
 import 'package:myapp/views/drawer.dart';
 import 'package:myapp/widgets/shoe_grid.dart';
@@ -10,6 +9,8 @@ class HomePage extends StatefulWidget {
   @override
   State<HomePage> createState() => _HomePageState();
 }
+
+
 
 class _HomePageState extends State<HomePage> {
   AuthService auth = AuthService();

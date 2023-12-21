@@ -24,7 +24,7 @@ class drawerPage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      auth.auth.currentUser!.displayName!,
+                      auth.auth.currentUser!.displayName??'',
                       style: GoogleFonts.montserrat(color: Colors.white,
                         fontSize: 20,)
                     ),

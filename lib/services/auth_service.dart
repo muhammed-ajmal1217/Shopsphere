@@ -6,6 +6,7 @@ import 'package:myapp/model/usermodel.dart';
 class AuthService {
   FirebaseAuth auth = FirebaseAuth.instance;
   FirebaseFirestore firestore = FirebaseFirestore.instance;
+
   Future signIn(String email, String password) async {
     try {
       UserCredential user = await auth.signInWithEmailAndPassword(
@@ -21,12 +22,16 @@ class AuthService {
       UserCredential user = await auth.createUserWithEmailAndPassword(
           email: email, password: password);
       final userdata = UserModel(email: email, name: name, uid: user.user!.uid);
-      firestore.collection("users").doc(user.user!.uid).set(userdata.toJson());
+      await firestore
+          .collection("users")
+          .doc(user.user!.uid)
+          .set(userdata.toJson());
       return user;
     } on FirebaseAuthException catch (e) {
       throw Exception(e.code);
     }
   }
+
   Future<void> signInWithGoogle() async {
     try {
       final GoogleSignInAccount? gUser = await GoogleSignIn().signIn();
@@ -39,7 +44,18 @@ class AuthService {
         UserCredential userCredential =
             await FirebaseAuth.instance.signInWithCredential(credential);
         User? user = userCredential.user;
-        print("Google Sign-In successful: ${user?.displayName}");
+        final userDoc =
+            await firestore.collection("users").doc(user!.uid).get();
+        if (!userDoc.exists) {
+          final userdata = UserModel(
+              email: user.email, name: user.displayName, uid: user.uid);
+          await firestore
+              .collection("users")
+              .doc(user.uid)
+              .set(userdata.toJson());
+        }
+
+        print("Google Sign-In successful: ${user.displayName}");
       } else {
         print("Google Sign-In canceled");
         print("Google User: $gUser");
@@ -51,7 +67,6 @@ class AuthService {
 
   Future<void> signOutFromGoogle() async {
     final GoogleSignIn googleSignIn = GoogleSignIn();
-    final FirebaseAuth auth = FirebaseAuth.instance;
     try {
       await googleSignIn.signOut();
       await auth.signOut();
