@@ -5,6 +5,8 @@ import 'package:iconsax/iconsax.dart';
 import 'package:myapp/helpers/custom_container.dart';
 import 'package:myapp/helpers/helpers.dart';
 import 'package:myapp/services/auth_service.dart';
+import 'package:myapp/services/firebase_service.dart';
+import 'package:myapp/views/phoneauth.dart';
 
 // ignore: must_be_immutable
 class LoginPage extends StatefulWidget {
@@ -94,7 +96,7 @@ class _LoginPageState extends State<LoginPage> {
                         width:width*0.43 ,
                         decoration: BoxDecoration(
                           color: Colors.white.withOpacity(0.4),
-                          borderRadius: const BorderRadius.only(topLeft: Radius.circular(20),bottomLeft: Radius.circular(20))
+                          borderRadius: BorderRadius.circular(20)
                         ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -108,24 +110,51 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                       ),
                       spacingWidth(5),
-                      Container(
-                        height: height*0.07,
-                        width:width*0.43 ,
-                        decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.4),
-                          borderRadius: BorderRadius.only(topRight: Radius.circular(20),bottomRight: Radius.circular(20))
+                      GestureDetector(
+                        child: Container(
+                          height: height*0.07,
+                          width:width*0.43 ,
+                          decoration: BoxDecoration(
+                            color: Colors.white.withOpacity(0.4),
+                            borderRadius: BorderRadius.circular(20)
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                           children: [
+                            Image.asset('assets/githubpng.png',height: height*0.04,),
+                            spacingWidth(10),
+                            Text('Github',style: GoogleFonts.montserrat(color: Colors.white,fontSize: 18))
+                           ],
+                          ),
                         ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                         children: [
-                          Icon(Iconsax.mobile,color: Colors.white,size: 35,),
-                          spacingWidth(10),
-                          Text('Phone',style: GoogleFonts.montserrat(color: Colors.white,fontSize: 18))
-                         ],
-                        ),
+                        onTap: () {
+                          AuthService().signInWithGithub();
+                        },
                       ),
                     ],
-                  )
+                  ),
+                  spacingHeight(5),
+                  GestureDetector(
+                        child: Container(
+                          height: height*0.07,
+                          width:width*0.43 ,
+                          decoration: BoxDecoration(
+                            color: Colors.white.withOpacity(0.4),
+                            borderRadius: BorderRadius.circular(20)
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                           children: [
+                            Icon(Iconsax.mobile,color: Colors.white,size: 35,),
+                            spacingWidth(10),
+                            Text('Phone',style: GoogleFonts.montserrat(color: Colors.white,fontSize: 18))
+                           ],
+                          ),
+                        ),
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(builder: (context)=>PhoneAuthPage()));
+                        },
+                      ),
                 ],
               ),
             ),

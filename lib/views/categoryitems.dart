@@ -1,42 +1,45 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:myapp/controller/category_provider.dart';
+import 'package:myapp/controller/wishlist_provider.dart.dart';
 import 'package:myapp/helpers/helpers.dart';
 import 'package:myapp/model/product_model.dart';
-import 'package:myapp/services/auth_service.dart';
-import 'package:myapp/controller/wishlist_provider.dart.dart';
-import 'package:myapp/widgets/shimmer_list.dart';
+import 'package:myapp/widgets/shimmer_grid.dart';
 import 'package:provider/provider.dart';
 
-class WishListPage extends StatelessWidget {
-  final ProductModel? product;
+class CategoryItems extends StatelessWidget {
+  CategoryItems({super.key,});
 
-  WishListPage({this.product});
-  AuthService auth = AuthService();
   @override
   Widget build(BuildContext context) {
-    final pro = Provider.of<Wishlist>(context);
-    return Scaffold(
+    final catPro= Provider.of<CategoryProvider>(context);
+    final wishlistpro= Provider.of<Wishlist>(context);
+    return  Scaffold(
+      backgroundColor: Color.fromARGB(255, 24, 30, 41),
+      appBar: AppBar(
         backgroundColor: Color.fromARGB(255, 24, 30, 41),
-        appBar: AppBar(
-          title: Text(
-            'Cart',
-            style: GoogleFonts.montserrat(color: Colors.white),
-          ),
-          backgroundColor: Color.fromARGB(255, 24, 30, 41),
-        ),
-        body: FutureBuilder<List<ProductModel>>(
-            future: pro.getWishlistItems(auth.auth.currentUser!.uid),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return ShimmerLoaderList();
-              } else if (snapshot.hasError) {
-                print('this is the snapshot error${snapshot.error}');
-                return Text(snapshot.error.toString());
-              } else {
-                return ListView.builder(
-                  itemCount: pro.wishlistItems.length,
+        title: Text('Your Store',style: GoogleFonts.montserrat(
+                          fontWeight: FontWeight.w500,
+                          color: Colors.white)),
+      ),
+      body: FutureBuilder<List<ProductModel>>(
+        future: catPro.getCategoryItems(type: 'creams',typeofcategory: 'creamcategory'),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return ShimmerLoader();
+          } else if (snapshot.hasError) {
+            print(snapshot.error);
+            return Text(
+              snapshot.error.toString(),
+              style: TextStyle(color: Colors.white),
+            );
+          } else if (snapshot.data == null) {
+            return CircularProgressIndicator();
+          } else {
+            return ListView.builder(
+                  itemCount: catPro.items.length,
                   itemBuilder: (context, index) {
-                    final data = pro.wishlistItems[index];
+                    final data = catPro.items[index];
                     return Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Container(
@@ -94,12 +97,6 @@ class WishListPage extends StatelessWidget {
                                   ),
                                 ],
                               ),
-                              InkWell(
-                                  onTap: () {
-                                    pro.removeProductFromWishlist(
-                                        data, auth.auth.currentUser!.uid,data.id);
-                                  },
-                                  child: Icon(Icons.delete_forever_outlined,color: Color.fromARGB(255, 241, 52, 52),))
                             ],
                           ),
                         ),
@@ -107,7 +104,9 @@ class WishListPage extends StatelessWidget {
                     );
                   },
                 );
-              }
-            }));
+          }
+        },
+      ),
+    );
   }
 }

@@ -27,11 +27,11 @@ class _MyWidgetState extends State<BottomNavigation> {
   Widget build(BuildContext context) {
     final bottomProvider=Provider.of<BottomBarProvider>(context);
     return Scaffold(
-      backgroundColor:  Colors.black,
+      backgroundColor:  Color.fromARGB(255, 24, 30, 41),
       body: _pages[bottomProvider.currentIndex],
       bottomNavigationBar: Container( 
         child: NavigationBar(
-          backgroundColor:  Colors.black,
+          backgroundColor:  Color.fromARGB(255, 18, 23, 31),
           selectedIndex: bottomProvider.currentIndex,
           onDestinationSelected: (index) {
             bottomProvider.navigatePage(index);

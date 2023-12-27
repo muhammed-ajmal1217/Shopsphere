@@ -3,23 +3,22 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:myapp/controller/homepage_provider.dart';
 import 'package:myapp/model/product_model.dart';
 import 'package:myapp/services/auth_service.dart';
-import 'package:myapp/services/firebase_service.dart';
 import 'package:myapp/views/details.dart';
 import 'package:myapp/widgets/shimmer_grid.dart';
 import 'package:myapp/controller/wishlist_provider.dart.dart';
 import 'package:provider/provider.dart';
 
-class ShoeItems extends StatelessWidget {
-  ShoeItems({super.key});
+class FurnitureItems extends StatelessWidget {
+  FurnitureItems({super.key});
 
   AuthService auth = AuthService();
 
   @override
   Widget build(BuildContext context) {
-    final wishlistpro = Provider.of<Wishlist>(context);
+    final pro = Provider.of<Wishlist>(context);
     final homePro=Provider.of<HomeProvider>(context);
     return StreamBuilder<List<ProductModel>>(
-      stream: homePro.getProducts(),
+      stream: homePro.getFurniture(),
       builder: (context, snapshot) {
         final data = snapshot.data;
         if (snapshot.connectionState == ConnectionState.waiting) {
@@ -89,7 +88,7 @@ class ShoeItems extends StatelessWidget {
                                     ),
                                   ),
                                   onTap: () {
-                                    wishlistpro.addProductToWishlist(product, auth.auth.currentUser!.uid);
+                                    pro.addProductToWishlist(product, auth.auth.currentUser!.uid);
                                   },
                                 )),
                             Padding(

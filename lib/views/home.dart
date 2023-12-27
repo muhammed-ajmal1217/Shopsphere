@@ -4,6 +4,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:myapp/helpers/helpers.dart';
 import 'package:myapp/services/auth_service.dart';
 import 'package:myapp/views/drawer.dart';
+import 'package:myapp/widgets/category_list.dart';
+import 'package:myapp/widgets/furniture_grid.dart';
 import 'package:myapp/widgets/shoe_grid.dart';
 class HomePage extends StatefulWidget {
   @override
@@ -104,7 +106,7 @@ class _HomePageState extends State<HomePage> {
                           width: double.infinity,
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(20),
-                              color: Colors.grey[800],
+                              color: Color.fromARGB(255, 29, 35, 46),
                               image: DecorationImage(
                                   fit: BoxFit.fill,
                                   image: AssetImage(imageUrl))),
@@ -119,6 +121,7 @@ class _HomePageState extends State<HomePage> {
           SliverPadding(
             padding: EdgeInsets.symmetric(vertical: 10.0),
           ),
+          Categories(),
           SliverToBoxAdapter(
             child: Padding(
               padding: const EdgeInsets.only(left: 10.0),
@@ -150,6 +153,19 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           ShoeItems(),
+          
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.only(left: 10.0),
+              child: Text('Furniture',
+                      style: GoogleFonts.montserrat(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.white)),
+            ),
+          ),
+          
+           FurnitureItems(),
         ],
       ),
     );

@@ -74,4 +74,12 @@ class AuthService {
       print("Error during Google sign-out: $e");
     }
   }
+
+  signInWithGithub()async{
+    GithubAuthProvider githubAuthProvider = GithubAuthProvider();
+    final UserCredential user = await auth.signInWithProvider(githubAuthProvider);
+    User githubuser=user.user!;
+    UserModel userdata = UserModel(email: githubuser.email,name: githubuser.displayName,uid: githubuser.uid);
+    firestore.collection("users").doc(githubuser.uid).set(userdata.toJson());
+  }
 }
