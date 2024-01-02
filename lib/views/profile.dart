@@ -27,7 +27,7 @@ class Profile extends StatelessWidget {
                 padding: const EdgeInsets.all(18.0),
                 child: Column(crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(auth.auth.currentUser!.displayName!,style: GoogleFonts.montserrat(color:Colors.white,fontSize: 17),),
+                    Text(auth.auth.currentUser!.displayName??'',style: GoogleFonts.montserrat(color:Colors.white,fontSize: 17),),
                      spacingHeight(10),
                     Text(auth.auth.currentUser!.email!,style:GoogleFonts.montserrat(color: Colors.white,fontSize: 15,fontWeight: FontWeight.w600)),
                     spacingHeight(10),

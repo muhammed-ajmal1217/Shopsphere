@@ -29,7 +29,7 @@ class drawerPage extends StatelessWidget {
                         fontSize: 20,)
                     ),
                     Text(
-                      auth.auth.currentUser!.email!,
+                      auth.auth.currentUser!.email??'',
                       style: GoogleFonts.montserrat(color: Colors.white,
                         fontSize: 12,)
                     ),
@@ -50,7 +50,7 @@ class drawerPage extends StatelessWidget {
                   backgroundColor:  Color.fromARGB(255, 24, 30, 41),
                  actions: [
                     TextButton(onPressed: () {
-                    AuthService().signOutFromGoogle();
+                    AuthService().signOut();
                     Navigator.pop(context);
                     }, child: Text('Yes')),
                     TextButton(onPressed: () {

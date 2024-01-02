@@ -5,7 +5,6 @@ import 'package:iconsax/iconsax.dart';
 import 'package:myapp/helpers/custom_container.dart';
 import 'package:myapp/helpers/helpers.dart';
 import 'package:myapp/services/auth_service.dart';
-import 'package:myapp/services/firebase_service.dart';
 import 'package:myapp/views/phoneauth.dart';
 
 // ignore: must_be_immutable
@@ -72,7 +71,7 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       child: Center(child: Text('Login',style: GoogleFonts.workSans(color: Colors.white,fontSize: 20,fontWeight: FontWeight.w500),)),
                     ),
-                    onTap: () => AuthService().signIn(emailController.text.trim(), passwordController.text.trim())
+                    onTap: () => AuthService().signInWithEmail(emailController.text.trim(), passwordController.text.trim(),context)
                   ),
                   spacingHeight(20),
                   Row(
@@ -87,74 +86,54 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   Text('Or Sign in with',style: GoogleFonts.workSans(color: Colors.grey,fontSize: 10,fontWeight: FontWeight.w500),),
                   spacingHeight(10),
-                  spacingHeight(10),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Container(
-                        height: height*0.07,
-                        width:width*0.43 ,
-                        decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.4),
-                          borderRadius: BorderRadius.circular(20)
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Image.asset('assets/socialGoogle.png',height: height*0.04,),
-                            spacingWidth(10),
-                            GestureDetector(
-                              onTap: () => AuthService().signInWithGoogle(),
-                              child: Text('Google',style: GoogleFonts.montserrat(color: Colors.white,fontSize: 18),))
-                          ],
+                      GestureDetector(
+                        onTap: () => AuthService().singinWithGoogle(),
+                        child: Container(
+                          height: height*0.07,
+                          width:width*0.20 ,
+                          decoration: BoxDecoration(
+                            color: Colors.white.withOpacity(0.4),
+                            borderRadius: BorderRadius.circular(20)
+                          ),
+                          child: Image.asset('assets/socialGoogle.png',height: height*0.04,),
                         ),
                       ),
                       spacingWidth(5),
                       GestureDetector(
                         child: Container(
                           height: height*0.07,
-                          width:width*0.43 ,
+                          width:width*0.20 ,
                           decoration: BoxDecoration(
                             color: Colors.white.withOpacity(0.4),
                             borderRadius: BorderRadius.circular(20)
                           ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                           children: [
-                            Image.asset('assets/githubpng.png',height: height*0.04,),
-                            spacingWidth(10),
-                            Text('Github',style: GoogleFonts.montserrat(color: Colors.white,fontSize: 18))
-                           ],
-                          ),
+                          child: Image.asset('assets/githubpng.png',height: height*0.04,),
                         ),
                         onTap: () {
-                          AuthService().signInWithGithub();
+                          AuthService().signInWithGithub(context);
                         },
                       ),
-                    ],
-                  ),
-                  spacingHeight(5),
-                  GestureDetector(
+                      spacingWidth(5),
+                       GestureDetector(
                         child: Container(
                           height: height*0.07,
-                          width:width*0.43 ,
+                          width:width*0.20 ,
                           decoration: BoxDecoration(
                             color: Colors.white.withOpacity(0.4),
                             borderRadius: BorderRadius.circular(20)
                           ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                           children: [
-                            Icon(Iconsax.mobile,color: Colors.white,size: 35,),
-                            spacingWidth(10),
-                            Text('Phone',style: GoogleFonts.montserrat(color: Colors.white,fontSize: 18))
-                           ],
-                          ),
+                          child: Icon(Iconsax.mobile,color: Colors.white,size: 35,),
                         ),
                         onTap: () {
                           Navigator.of(context).push(MaterialPageRoute(builder: (context)=>PhoneAuthPage()));
                         },
                       ),
+                    ],
+                  ),
+                 
                 ],
               ),
             ),

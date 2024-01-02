@@ -1,11 +1,10 @@
-
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:lottie/lottie.dart';
 import 'package:myapp/helpers/helpers.dart';
-import 'package:myapp/views/otp_screen.dart';
+import 'package:myapp/services/auth_service.dart';
 
 class PhoneAuthPage extends StatefulWidget {
   const PhoneAuthPage({super.key});
@@ -14,80 +13,85 @@ class PhoneAuthPage extends StatefulWidget {
   State<PhoneAuthPage> createState() => _PhoneAuthPageState();
 }
 
+AuthService service = AuthService();
+
 class _PhoneAuthPageState extends State<PhoneAuthPage> {
   TextEditingController phoneController = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    phoneController.selection = TextSelection.fromPosition(
+        TextPosition(offset: phoneController.text.length));
     return Scaffold(
       appBar: AppBar(
         foregroundColor: Colors.white,
         backgroundColor: Color.fromARGB(255, 24, 30, 41),
       ),
       backgroundColor: Color.fromARGB(255, 24, 30, 41),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Align(
-              alignment: Alignment.center,
-              child: Container(
-                child: Lottie.asset(
-                  'assets/Animation - 1703263987973 (1).json',
-                  width: 300,
-                  height: 300,
-                  fit: BoxFit.cover,
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Align(
+                alignment: Alignment.center,
+                child: Container(
+                  child: Lottie.asset(
+                    'assets/Animation - 1703263987973 (1).json',
+                    width: 300,
+                    height: 300,
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
-            ),
-            Text(
-              'Enter Phone Number',
-              style: GoogleFonts.montserrat(
-                color: Colors.white,
-              ),
-            ),
-            spacingHeight(10),
-            TextFormField(
-              controller: phoneController,
-              style: TextStyle(color: Colors.white),
-              keyboardType: TextInputType.phone,
-              decoration: InputDecoration(
-                hintText: 'Enter your number with country code',
-                hintStyle: TextStyle(color: Colors.grey),
-                prefixIcon: Icon(Iconsax.mobile),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(20),
+              spacingHeight(10),
+              TextFormField(
+                controller: phoneController,
+                onChanged: (value) {
+                  setState(() {
+                    phoneController.text = value;
+                  });
+                },
+                style: TextStyle(color: Colors.white),
+                keyboardType: TextInputType.phone,
+                decoration: InputDecoration(
+                  hintText: 'Enter your number',
+                  hintStyle: TextStyle(color: Colors.grey),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  fillColor: Color.fromARGB(255, 30, 38, 52),
+                  filled: true,
+                  suffixIcon: phoneController.text.length > 9
+                      ? Icon(
+                          Icons.done_sharp,
+                          color: Colors.green,
+                        )
+                      : null,
                 ),
-                fillColor: Color.fromARGB(255, 30, 38, 52),
-                filled: true,
               ),
-            ),
-            spacingHeight(20),
-            Center(
-              child: ElevatedButton(
-                onPressed: ()async{
-                  await FirebaseAuth.instance.verifyPhoneNumber(
-                    verificationCompleted: (PhoneAuthCredential credentia){
-
-                    }, 
-                    verificationFailed: (FirebaseAuthException exception){
-
-                    }, 
-                    codeSent: (String verificationId, int? forceResendingToken){
-                      Navigator.of(context).push(MaterialPageRoute(builder: (context)=>OtpScreen(verificationId: verificationId,)));
-                    }, 
-                    codeAutoRetrievalTimeout: (String verificationId){
-
-                    },
-                    phoneNumber: phoneController.text.toString(),
+              spacingHeight(20),
+              Center(
+                child: ElevatedButton(
+                  onPressed: () async {
+                    String countrycode = "+91";
+                    String phonenumber = countrycode + phoneController.text;
+                    service.signInwithPhone(
+                       phonenumber,
+                       context,
                     );
-                }, child: Text('Send request',style: TextStyle(color: Colors.white),),
-                style: ButtonStyle(
-                  backgroundColor:MaterialStatePropertyAll(Colors.amber),
+                  },
+                  child: Text(
+                    'Send request',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStatePropertyAll(Colors.amber),
+                  ),
                 ),
-                ),
-            ),
-          ],
+              ),
+            ],
+          ),
         ),
       ),
     );

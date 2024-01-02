@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:myapp/controller/homepage_provider.dart';
 import 'package:myapp/model/category_model.dart';
 import 'package:myapp/services/auth_service.dart';
-import 'package:myapp/views/categoryitems.dart';
+import 'package:myapp/widgets/category_items_builder.dart';
 import 'package:myapp/widgets/shimmer_grid.dart';
 import 'package:provider/provider.dart';
 
@@ -56,7 +56,7 @@ class Categories extends StatelessWidget {
                         ],
                       ),
                       onTap: (){
-                        Navigator.of(context).push(MaterialPageRoute(builder: (context)=>CategoryItems()));
+                        Navigator.of(context).push(MaterialPageRoute(builder: (context)=>CategoryItems(category: category,)));
                       },
                     ),
                   );

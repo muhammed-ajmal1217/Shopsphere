@@ -1,12 +1,14 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:myapp/controller/homepage_provider.dart';
 import 'package:myapp/helpers/helpers.dart';
 import 'package:myapp/services/auth_service.dart';
 import 'package:myapp/views/drawer.dart';
 import 'package:myapp/widgets/category_list.dart';
 import 'package:myapp/widgets/furniture_grid.dart';
 import 'package:myapp/widgets/shoe_grid.dart';
+import 'package:provider/provider.dart';
 class HomePage extends StatefulWidget {
   @override
   State<HomePage> createState() => _HomePageState();
@@ -16,6 +18,12 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   AuthService auth = AuthService();
+
+  @override
+  void initState() {
+    super.initState();
+    Provider.of<HomeProvider>(context,listen: false).getCurrentUser();
+  }
 
   final List<String> images = [
     'assets/4021475.jpg',
@@ -54,7 +62,7 @@ class _HomePageState extends State<HomePage> {
                         height: 20,
                       ),
                       spacingWidth(10),
-                      Text('${auth.auth.currentUser!.displayName}',
+                      Text(Provider.of<HomeProvider>(context).currentusername,
                           style: GoogleFonts.montserrat(
                               fontSize: 17,
                               fontWeight: FontWeight.w500,

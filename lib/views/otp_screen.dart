@@ -1,77 +1,69 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
-import 'package:myapp/helpers/helpers.dart';
+import 'package:myapp/services/auth_service.dart';
 import 'package:myapp/views/home.dart';
+import 'package:myapp/widgets/custom_textfield.dart';
 
-class OtpScreen extends StatefulWidget {
+class OtpScreen extends StatelessWidget {
   String verificationId;
   OtpScreen({super.key, required this.verificationId});
 
-  @override
-  State<OtpScreen> createState() => _OtpScreenState();
-}
-
-class _OtpScreenState extends State<OtpScreen> {
-  TextEditingController otpController = TextEditingController();
+  TextEditingController otpcontroller = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    Size size = MediaQuery.of(context).size;
+    return AlertDialog(
       backgroundColor: Color.fromARGB(255, 24, 30, 41),
-      body: Column(children: [
-        spacingHeight(70),
-        Align(
-          alignment: Alignment.center,
+      content: Lottie.asset(
+        'assets/Animation - 1703265851950.json',
+        height: 150,
+      ),
+      actions: [
+        CustomTextField(
+          controller: otpcontroller,
+          hinttext: "OTP",
+          fillcolor: const Color.fromRGBO(43, 40, 53, 1),
+        ),
+        const SizedBox(height: 20),
+        GestureDetector(
+          onTap: () {
+            verifyOtp(context, otpcontroller.text);
+          },
           child: Container(
-            child: Lottie.asset(
-              'assets/Animation - 1703265851950.json',
-              width: 300,
-              height: 300,
-              fit: BoxFit.cover,
+            height: size.height * 0.07,
+            width: size.width,
+            decoration: BoxDecoration(
+              color: const Color.fromARGB(255, 143, 157, 221),
+              borderRadius: BorderRadius.circular(25),
             ),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(left: 30, right: 30),
-          child: TextFormField(
-            style: TextStyle(color: Colors.white),
-            keyboardType: TextInputType.number,
-            decoration: InputDecoration(
-              label: Text('OTP'),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(20),
+            child: Center(
+              child: Text(
+                'Submit',
+                style: GoogleFonts.ubuntu(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-              fillColor: Color.fromARGB(255, 30, 38, 52),
-              filled: true,
             ),
           ),
         ),
-        spacingHeight(20),
-        Center(
-          child: ElevatedButton(
-            onPressed: () async {
-              try {
-                PhoneAuthCredential credential =
-                    await PhoneAuthProvider.credential(
-                        verificationId: widget.verificationId,
-                        smsCode: otpController.text.toString());
-                        FirebaseAuth.instance.signInWithCredential(credential).then((value) {
-                          Navigator.of(context).push(MaterialPageRoute(builder: (ctx)=>HomePage()));
-                        });
-              } catch (error) {
-                print('while phone authentication : ${error}');
-              }
-            },
-            child: Text(
-              'Submit',
-              style: TextStyle(color: Colors.white),
-            ),
-            style: ButtonStyle(
-              backgroundColor: MaterialStatePropertyAll(Colors.blue),
-            ),
-          ),
-        )
-      ]),
+      ],
     );
   }
+
+  void verifyOtp(context, String userotp) {
+    AuthService service = AuthService();
+    service.verifyOtp(
+        verificationId: verificationId,
+        otp: userotp,
+        onSuccess: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => HomePage(),
+              ));
+        });
+  }
 }
+

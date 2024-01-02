@@ -36,7 +36,7 @@ class _SignUpPageState extends State<SignUpPage> {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text('Not Match')));
     }
-    AuthService().signUp(
+    AuthService().signUpWithEmail(
         emailController.text, passwordController.text, nameController.text);
   }
 
