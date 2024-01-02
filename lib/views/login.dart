@@ -48,7 +48,7 @@ class _LoginPageState extends State<LoginPage> {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  spacingHeight(100),
+                  spacingHeight(130),
                   const Center(child: Icon(Iconsax.security_safe,color: Colors.white,size: 60,)),
                   spacingHeight(10),
                   Text('Welcome',style: GoogleFonts.ubuntu(color: Colors.white,fontSize: 30,fontWeight: FontWeight.w500),),
@@ -92,34 +92,40 @@ class _LoginPageState extends State<LoginPage> {
                       GestureDetector(
                         onTap: () => AuthService().singinWithGoogle(),
                         child: Container(
-                          height: height*0.07,
+                          height: height*0.09,
                           width:width*0.20 ,
                           decoration: BoxDecoration(
                             color: Colors.white.withOpacity(0.4),
                             borderRadius: BorderRadius.circular(20)
                           ),
-                          child: Image.asset('assets/socialGoogle.png',height: height*0.04,),
+                          child: Padding(
+                            padding: const EdgeInsets.all(18.0),
+                            child: Container(child: Image.asset('assets/socialGoogle.png')),
+                          ),
                         ),
                       ),
-                      spacingWidth(5),
+                      spacingWidth(25),
                       GestureDetector(
                         child: Container(
-                          height: height*0.07,
+                          height: height*0.09,
                           width:width*0.20 ,
                           decoration: BoxDecoration(
                             color: Colors.white.withOpacity(0.4),
                             borderRadius: BorderRadius.circular(20)
                           ),
-                          child: Image.asset('assets/githubpng.png',height: height*0.04,),
+                          child: Padding(
+                            padding: const EdgeInsets.all(19.0),
+                            child: Container(child: Image.asset('assets/githubpng.png',height: height*0.04,)),
+                          ),
                         ),
                         onTap: () {
                           AuthService().signInWithGithub(context);
                         },
                       ),
-                      spacingWidth(5),
+                      spacingWidth(25),
                        GestureDetector(
                         child: Container(
-                          height: height*0.07,
+                          height: height*0.09,
                           width:width*0.20 ,
                           decoration: BoxDecoration(
                             color: Colors.white.withOpacity(0.4),
