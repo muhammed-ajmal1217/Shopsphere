@@ -14,14 +14,14 @@ experience.
 
 <!-- Image Gallery -->
 <div align="center">
-  <img src="https://github.com/muhammed-ajmal1217/Shopsphere/assets/136672051/be85c67d-5fcd-4261-b14a-8b042fed48e1" alt="Screenshot 1" width="200"/>
+<!--   <img src="https://github.com/muhammed-ajmal1217/Shopsphere/assets/136672051/be85c67d-5fcd-4261-b14a-8b042fed48e1" alt="Screenshot 1" width="200"/>
   <img src="https://github.com/muhammed-ajmal1217/Shopsphere/assets/136672051/c2c083e5-a92d-4a84-bb85-4c08dcb7b248" alt="Screenshot 2" width="200"/>
   <img src="https://github.com/muhammed-ajmal1217/Shopsphere/assets/136672051/ebce477e-84fd-4a7f-bb9d-214a51d986ac" alt="Screenshot 3" width="200"/>
   <img src="https://github.com/muhammed-ajmal1217/Shopsphere/assets/136672051/607a8d3e-13b5-4cd3-8434-60921aaea82b" alt="Screenshot 4" width="200"/>
   <img src="https://github.com/muhammed-ajmal1217/Shopsphere/assets/136672051/b3f92f96-5e88-4f7c-9849-6e4b49d90aa9" alt="Screenshot 4" width="200"/>
   <img src="https://github.com/muhammed-ajmal1217/Shopsphere/assets/136672051/702b35f3-6e68-4ca4-9e84-92d0389ae21d" alt="Screenshot 4" width="200"/>
   <img src="https://github.com/muhammed-ajmal1217/Shopsphere/assets/136672051/f6760e65-71f7-4a73-b11a-457d24ad31fe" alt="Screenshot 4" width="200"/>
-  <img src="https://github.com/muhammed-ajmal1217/Shopsphere/assets/136672051/5111f49c-b33f-4ca8-892a-698f133fc7e8" alt="Screenshot 4" width="200"/>
+  <img src="https://github.com/muhammed-ajmal1217/Shopsphere/assets/136672051/5111f49c-b33f-4ca8-892a-698f133fc7e8" alt="Screenshot 4" width="200"/> -->
 </div>
 
 
